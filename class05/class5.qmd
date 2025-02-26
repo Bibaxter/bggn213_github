@@ -1,0 +1,221 @@
+---
+title: "class5:Data Viz with ggplot"
+author: "Bryn"
+format: pdf
+---
+
+#Graphs and plots in R
+
+R has tons of different graphics systems. These include **"base R"** (e.g. the`plot()` function) and add on packages like **ggplot2**.
+
+Let's start with plotting a simple dataset in "base R" and then ggplot2 to see how they differ. 
+
+```{r}
+head(cars)
+```
+
+To plot this in base R just use `plot()`
+
+```{r}
+plot(cars)
+
+```
+
+First to use ggplot2 I need to install the package. For this i use the `install.packages()` command. 
+
+> I dont want to run`install.packages()` in my quartodoc as this would re-install the package every time I render the document. 
+
+The main function in the ggplot2 package is `ggplot()`. Before I can use ggplot2 function, I need to load the package with a `library()` command. 
+
+
+```{r}
+library(ggplot2)
+ggplot(cars)
+```
+
+There are at least 3 things that every ggplot needs: 
+
+-the **data** (actual data set I want to plot)
+-the **aes**thetics (how the data maps to my plot) 
+-the **geoms** or geometrics (the style of the plot)
+
+
+
+```{r}
+ggplot(cars)+
+  aes(x=speed, y=dist)+
+  geom_point()
+
+
+
+  
+```
+
+I can add more layers to build more complicated plots:
+
+```{r}
+ggplot(cars)+
+  aes(x=speed, y=dist)+
+  geom_point()+
+  geom_line()
+
+```
+ `geom_smooth()` using method 
+ 
+```{r}
+p <- ggplot(cars) +
+  aes(x=speed, y=dist) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+```
+
+```{r}
+p
+```
+```{r}
+p+labs(title = " My nice ggplot", X= "speed (mph)", Y= "stopping distance")+
+  theme_bw()
+
+```
+
+## RNA seq plot with more aes() values
+
+```{r}
+url <- "https://bioboot.github.io/bimm143_S20/class-material/up_down_expression.txt"
+genes <- read.delim(url)
+head(genes)
+```
+
+>Q. Use the nrow() function to find out how many genes are in this dataset. What is your answer? 
+
+```{r}
+nrow(genes)
+```
+
+
+>Q. Use the colnames() function and the ncol() function on the genes data frame to find out what the column names are (we will need these later) and how many columns there are. How many columns did you find? 
+
+```{r}
+ncol(genes)
+```
+
+
+>Q. Use the table() function on the State column of this data.frame to find out how many ‘up’ regulated genes there are. What is your answer? 
+
+```{r}
+sum(genes$State=="up")
+```
+
+you could also do it this way: 
+
+```{r}
+table(genes$State)
+```
+
+>Q. Using your values above and 2 significant figures. What fraction of total genes is up-regulated in this dataset? 
+
+```{r}
+table(genes$State)/nrow(genes) *100
+```
+
+make the scatter plot with genes data:
+
+```{r}
+b <- ggplot(genes)+
+  aes(x= Condition1, y= Condition2, col=State)+
+  geom_point()
+b
+
+```
+ To change the colors that it defaults to use this code:
+ 
+```{r}
+Newb <- b + scale_color_manual( values=c("blue", "gray","red"))
+
+Newb
+```
+ To add a Title and labels use this code:
+ 
+```{r}
+Newb+ labs(title = "Gene Expression Changes Upon Drug Treatment",x= "Control (no drug)", y= "Drug Treatment")
+```
+ 
+## Gapminder dataset plots 
+
+We can get exposure to setting more `aes()` parameters with datasets that include more columns of useful data. For example the **gapminder** dataset on GDP and life expendency for different countries over time. 
+
+```{r}
+url <- "https://raw.githubusercontent.com/jennybc/gapminder/master/inst/extdata/gapminder.tsv"
+
+gapminder <- read.delim(url)
+```
+
+Have a wee peak at the first 6 rows:
+
+How many entries (i.e rows)
+```{r}
+nrow(gapminder)
+```
+ 
+
+```{r}
+head(gapminder)
+```
+>How many unique countries are there in this dataset?
+
+```{r}
+length(unique(gapminder$country))
+```
+
+
+>What years does the data set cover?
+
+```{r}
+unique(gapminder$year)
+```
+
+Key functions that will be useful in our R journey include:
+
+-nrow()
+-ncol()
+-length()
+-unique()
+-table()
+
+```{r}
+c <- ggplot(gapminder)+
+  aes(x=gdpPercap, y=lifeExp, col=continent)+
+  geom_point(alpha=0.3)+ facet_wrap(~continent)
+
+c
+```
+
+```{r}
+p
+```
+
+to combine plots into a figure, use the package `patchwork`
+
+make sure to install and open with the `library(patchwork)`command:
+
+```{r}
+library(patchwork)
+# Setup some example plots 
+p1 <- ggplot(mtcars) + geom_point(aes(mpg, disp))
+p2 <- ggplot(mtcars) + geom_boxplot(aes(gear, disp, group = gear))
+p3 <- ggplot(mtcars) + geom_smooth(aes(disp, qsec))
+p4 <- ggplot(mtcars) + geom_bar(aes(carb))
+
+# Use patchwork to combine them here:
+(p1 | p2 | p3) /
+      p4
+
+
+```
+
+```{r}
+(p | b) / (Newb) / (c)
+
+```
+
