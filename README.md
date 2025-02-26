@@ -8,4 +8,4 @@ Winter 2025 class content
 
 -Class 5: Data visualization with ggplot2
 
--Class 6: R Functions 
+-Class 6: [R Functions](https://github.com/Bibaxter/bggn213_github/blob/main/Class%206/class%206%20lab.qmd) 
