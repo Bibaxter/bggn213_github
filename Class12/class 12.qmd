@@ -1,0 +1,89 @@
+---
+title: "AlphaFold analysis"
+author: "Bryn Baxter PID A69038039"
+format: pdf
+---
+
+Here we demonstrate how to analyze and make sense of models from AlphaFold. We begin by reading all the model PDB files...
+
+```{r}
+library(bio3d)
+```
+
+PDB file names of my model 
+```{r}
+files <- list.files("hiv_monomer_94b5b.result/hiv_monomer_94b5b/", 
+                    pattern=".pdb",
+                    full.names = T)
+files
+
+
+```
+
+Align and superpose
+
+```{r}
+pdbs <- pdbaln(files, fit=T, exefile="msa")
+
+```
+
+RMSD analysis 
+```{r}
+rd <- rmsd(pdbs, fit=T)
+mean(rd)
+```
+
+```{r}
+source("https://tinyurl.com/newviewngl")
+library(NGLVieweR)
+#view.pdbs(pdbs)
+```
+
+# PCA
+
+```{r}
+pc <- pca(pdbs)
+plot(pc)
+```
+
+#Residue conservation from alignment file 
+
+Alphafold
+```{r}
+aln_file <- list.files(path="hiv_monomer_94b5b.result/hiv_monomer_94b5b/",
+                       pattern=".a3m$",
+                        full.names = TRUE)
+aln_file
+```
+
+```{r}
+aln <- read.fasta(aln_file, to.upper = T)
+```
+
+```{r}
+dim(aln$ali)
+```
+
+Score residue conservation:
+```{r}
+sim <- conserv(aln)
+```
+```{r}
+con <- consensus(aln, cutoff=0.9)
+con$seq
+```
+
+PLot the conservation along the sequence/structure
+```{r}
+plot(sim, typ="h")
+```
+Lets look at these conserved positions in the structure:
+
+```{r}
+pdb <- read.pdb(files[1])
+
+#view.pdb(pdb, backgroundColor = "pink", 
+#        highlight = atom.select(pdb, resno=25:28), 
+#         highlight.style = "spacefill")
+```
+

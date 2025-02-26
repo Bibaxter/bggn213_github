@@ -1,0 +1,105 @@
+---
+title: "class 10: Comparative Structure Analysis"
+author: "Bryn Baxter (PID A69038039)"
+format: html
+---
+
+Lets finish off class 10 lab with a "pipeline" for comparative structure analysis. 
+
+```{r}
+library(bio3d)
+
+```
+
+```{r}
+id <- "1ake_A"
+
+
+aa <- get.seq(id)
+aa
+
+```
+Lets search for related sequences in the PDB database 
+
+```{r}
+bast <- blast.pdb(aa)
+```
+
+Plot an overview of my search results:
+
+
+```{r}
+hits <- plot(bast)
+```
+
+Lets see what these "top hits" are:
+
+```{r}
+hits$pdb.id
+```
+
+We can download all these PDBs to the `path="pdbs"` folder with the `get.pdb()` fucntion:
+
+```{r}
+files <- get.pdb(hits$pdb.id, path="pdbs", split=TRUE, gzip=TRUE)
+```
+
+```{r}
+# Align releated PDBs
+pdbs <- pdbaln(files, fit = TRUE, exefile="msa")
+```
+
+## Conventional analysis
+
+An RMSD analysis and heatmap:
+
+```{r}
+rd <- rmsd(pdbs)
+```
+
+```{r}
+library(pheatmap)
+pheatmap(rd)
+```
+
+```{r}
+source("https://tinyurl.com/newviewngl")
+library(NGLVieweR)
+```
+
+```{r}
+view.pdbs(pdbs)
+```
+
+We can cluster by RMSD and then color our structure display
+
+```{r}
+km <- kmeans(rd, centers=3)
+mycols <- c("red", "blue", "green")[km$cluster]
+```
+
+```{r}
+view.pdbs(pdbs, color=mycols)
+```
+
+## Principal Component Analysis
+
+```{r}
+pc <- pca(pdbs)
+plot(pc, col=mycols)
+```
+
+```{r}
+mktrj(pc, file="pca.pdb")
+```
+
+```{r}
+p <- read.pdb("pca.pdb", multi=T)
+view.pdb(p)
+```
+
+```{r}
+ref <- read.pdb("1ake")
+view.pdb(ref)
+```
+

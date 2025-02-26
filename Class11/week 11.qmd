@@ -1,0 +1,72 @@
+---
+title: "Week 11: Genome informatics"
+author: "Bryn Baxter (PID A69038039)"
+format: pdf
+---
+
+# Section 1: Porportion on G/G in a population
+ 
+Download CSV file from esemble
+
+We need to read this CSV file 
+```{r}
+mxl <-read.csv("373531-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378 (2).csv")
+head(mxl)
+```
+
+```{r}
+table(mxl$Genotype..forward.strand.)
+```
+
+```{r}
+table(mxl$Genotype..forward.strand.)/nrow(mxl)*100
+
+```
+
+Now lets look at different population. I picked the GBR.
+
+```{r}
+gbr <- read.csv("373522-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378.csv")
+```
+
+Find proportion of G|G
+
+```{r}
+table(gbr$Genotype..forward.strand.)/ nrow(gbr)*100
+```
+
+This variant that is associated with childhood asthma is more frequent in the GBR population than MKL population. 
+
+Now lets dig into this further.
+
+## Section 4: Population Scale Analysis (HOMEWORK)
+
+How many samples do we have?
+
+```{r}
+expr <- read.table("Expression genotype results.txt")
+head(expr)
+```
+
+```{r}
+nrow(expr)
+```
+
+```{r}
+table(expr$geno)
+```
+
+```{r}
+library(ggplot2)
+```
+
+Lets make a box plot: 
+```{r}
+ggplot(expr)+ aes(geno,exp, fill=geno)+
+  geom_boxplot(notch=T) +
+  geom_jitter(width=0.2, alpha=0.2)+
+  labs(x="Genotype", y="Expression")
+  
+```
+
+

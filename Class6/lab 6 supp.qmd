@@ -1,0 +1,75 @@
+---
+title: "lab6_supp_Q6"
+author: Bryn Baxter
+format: pdf
+---
+# Can you improve this analysis code?
+
+library(bio3d)
+s1 <- read.pdb("4AKE") # kinase with drug
+s2 <- read.pdb("1AKE") # kinase no drug
+s3 <- read.pdb("1E4Y") # kinase with drug
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s2.chainA <- trim.pdb(s2, chain="A", elety="CA")
+s3.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s1.b <- s1.chainA$atom$b
+s2.b <- s2.chainA$atom$b
+s3.b <- s3.chainA$atom$b
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+plotb3(s2.b, sse=s2.chainA, typ="l", ylab="Bfactor")
+plotb3(s3.b, sse=s3.chainA, typ="l", ylab="Bfactor")
+
+>Q6. How would you generalize the original code above to work with any set of input protein structures?
+
+Lets make a function that encompasses all the work of the code above in a single function. 
+
+First we need to open the Bio3d package using the `library` fucntion. 
+```{r}
+library(bio3d)
+ 
+```
+
+Now we will make a function encompassing the three requirments for a function: 
+-name
+-input argument
+-function body 
+
+```{r}
+pdbs <- c("4AKE", "1AKE", "1E4Y" )
+bfactor_analysis <- function(pdbs){
+  
+  #use lapply to process PDB file. lapply will apply the function to each element in our input 
+  
+  
+plots <-  lapply(pdbs, function(pdb){
+  
+   #we will now use the read.pdb function to read the pdb files and parse their contents into a structures R format. 
+  
+  x <- read.pdb(pdb)
+  
+  
+  # Here we will use the trim.pdb function to extract specific portions of the pdb structure. This will help us only select certain parts of protein structure based on the criteria we want. 
+  
+  
+  chain <- trim.pdb(x, chain="A", elety="CA")
+  
+  # plot3b is a function within the bio3d package that will create plots of protein B-factors along a protein sequence. sse= secondary structure elements, typ= plot type (point, line, etc.), ylab= Y-axis label. 
+  
+  
+plotb3(chain$atom$b,    sse=chain, typ ="l", ylab="Bfactor", main=paste("B-factors for", pdb))
+
+# Using the return code we will specifically tell R what values and outputs we want from the function.
+
+return (list(structure=x, chain=chain, bfactor=chain$atom$b))
+  })
+
+# Having this names function will allow is to retrieve names for elements in vector, lists, or data frames
+names(plots) <- pdbs
+return(plots)
+  
+}
+
+bfactor_analysis(pdbs)
+
+```
+
