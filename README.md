@@ -23,3 +23,5 @@ Winter 2025 class content
 -Class 12: [Alphafold Analaysis](https://github.com/Bibaxter/bggn213_github/blob/main/Class12/class%2012.qmd)
 
 -Class 13: [RNASeq Analysis](https://github.com/Bibaxter/bggn213_github/blob/main/Class13/class%2013%20lab%20report.qmd)
+
+-Class 14: [RNASeq Mini Project](https://github.com/Bibaxter/bggn213_github/blob/main/Class14/Class%2014%20RNASeq%20mini%20project.qmd)
