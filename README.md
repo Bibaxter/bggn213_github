@@ -18,7 +18,7 @@ Winter 2025 class content
 
 -Class **10**: [Structural Bioinformatics Pt. 1](https://github.com/Bibaxter/bggn213_github/blob/main/Class10/class10.pdf)
 
--Class **11**: [Genome Informatics](https://github.com/Bibaxter/bggn213_github/blob/main/Class11/week%2011.qmd)
+-Class **11**: [Genome Informatics](https://github.com/Bibaxter/bggn213_github/blob/main/Class11/week-11.pdf)
 
 -Class **12**: [Alphafold Analaysis](https://github.com/Bibaxter/bggn213_github/blob/main/Class12/class%2012.qmd)
 
