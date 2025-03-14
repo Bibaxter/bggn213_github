@@ -28,7 +28,7 @@ Winter 2025 class content
 
 -Class **17**: [Cloud SRA Data Analysis](https://github.com/Bibaxter/bggn213_github/blob/main/Class17/class17.pdf)
 
--Class **18**: [Pertussis Mini Project]()
+-Class **18**: [Pertussis Mini Project](https://github.com/Bibaxter/bggn213_github/blob/main/Class18/class18.pdf)
 
 -Class **19**: [Cancer Mutation Mini Project]()
 
