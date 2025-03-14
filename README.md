@@ -8,7 +8,7 @@ Winter 2025 class content
 
 -Class **5**: [Data visualization with ggplot2](class5\class5.html)
 
--Class **6**: [R Functions](https://github.com/Bibaxter/bggn213_github/blob/main/Class%206/class%206%20lab.qmd) 
+-Class **6**: [R Functions](class6/class6.html) 
 
 -Class **7**: [Machine Learning pt. 1](https://github.com/Bibaxter/bggn213_github/blob/main/Class7/class%207%20lab.qmd)
 
