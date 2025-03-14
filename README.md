@@ -26,7 +26,7 @@ Winter 2025 class content
 
 -Class **14**: [RNASeq Mini Project](https://github.com/Bibaxter/bggn213_github/blob/main/Class14/Class-14-RNASeq-mini-project.pdf)
 
--Class **17**: [Cloud SRA Data Analysis]()
+-Class **17**: [Cloud SRA Data Analysis](https://github.com/Bibaxter/bggn213_github/blob/main/Class17/class17.pdf)
 
 -Class **18**: [Pertussis Mini Project]()
 
