@@ -4,7 +4,7 @@ My class work for [bggn 213](https://bioboot.github.io/bggn213_W25/) W25 at UC S
 
 Winter 2025 class content
 
--Class **4**: Intro to R
+-Class **4**: [Intro to R](https://github.com/Bibaxter/bggn213_github/blob/main/Class5/class4.pdf)
 
 -Class **5**: [Data visualization with ggplot2](https://github.com/Bibaxter/bggn213_github/blob/main/Class5/class5.pdf)
 
