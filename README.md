@@ -6,7 +6,7 @@ Winter 2025 class content
 
 -Class **4**: Intro to R
 
--Class **5**: [Data visualization with ggplot2](class5/class5.html)
+-Class **5**: [Data visualization with ggplot2](class5\class5.html)
 
 -Class **6**: [R Functions](https://github.com/Bibaxter/bggn213_github/blob/main/Class%206/class%206%20lab.qmd) 
 
