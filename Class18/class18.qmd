@@ -1,0 +1,281 @@
+---
+title: "class18: Pertussis Mini Project"
+author: "Bryn Baxter (PID A69038039)"
+format: pdf
+---
+
+Pertussis (aka whooping cough) is a serious lung infection caused by the bacteria  *Bordetella pertussis*. 
+
+The CDC tracks Pertussis case numbers and we can find this data here: 
+http://tinyurl.com/pertussiscdc
+
+We can scrape the data from this website using the **datapasta** package. 
+
+```{r, include=FALSE}
+cdc <- data.frame(
+  year = c(1922L,1923L,1924L,1925L,
+           1926L,1927L,1928L,1929L,1930L,1931L,
+           1932L,1933L,1934L,1935L,1936L,
+           1937L,1938L,1939L,1940L,1941L,1942L,
+           1943L,1944L,1945L,1946L,1947L,
+           1948L,1949L,1950L,1951L,1952L,
+           1953L,1954L,1955L,1956L,1957L,1958L,
+           1959L,1960L,1961L,1962L,1963L,
+           1964L,1965L,1966L,1967L,1968L,1969L,
+           1970L,1971L,1972L,1973L,1974L,
+           1975L,1976L,1977L,1978L,1979L,1980L,
+           1981L,1982L,1983L,1984L,1985L,
+           1986L,1987L,1988L,1989L,1990L,
+           1991L,1992L,1993L,1994L,1995L,1996L,
+           1997L,1998L,1999L,2000L,2001L,
+           2002L,2003L,2004L,2005L,2006L,2007L,
+           2008L,2009L,2010L,2011L,2012L,
+           2013L,2014L,2015L,2016L,2017L,2018L,
+           2019L,2020L,2021L,2022L, 2024L),
+  cases = c(107473,164191,165418,152003,
+                                   202210,181411,161799,197371,
+                                   166914,172559,215343,179135,265269,
+                                   180518,147237,214652,227319,103188,
+                                   183866,222202,191383,191890,109873,
+                                   133792,109860,156517,74715,69479,
+                                   120718,68687,45030,37129,60886,
+                                   62786,31732,28295,32148,40005,
+                                   14809,11468,17749,17135,13005,6799,
+                                   7717,9718,4810,3285,4249,3036,
+                                   3287,1759,2402,1738,1010,2177,2063,
+                                   1623,1730,1248,1895,2463,2276,
+                                   3589,4195,2823,3450,4157,4570,
+                                   2719,4083,6586,4617,5137,7796,6564,
+                                   7405,7298,7867,7580,9771,11647,
+                                   25827,25616,15632,10454,13278,
+                                   16858,27550,18719,48277,28639,32971,
+                                   20762,17972,18975,15609,18617,
+                                   6124,2116,3044, 35435)
+)
+
+```
+
+```{r}
+head(cdc)
+```
+
+>Q1. Make a plot of Pertussis cases per year. 
+
+```{r}
+library(ggplot2)
+
+ggplot(cdc)+
+  aes(year, cases)+
+  geom_line()
+```
+>Q2. Lets add the key milestones of the DTP (wP) vaccine roll out in 1942 and the switch to the new aP vaccine in 1996. We can use `geom_vline()` for this. Booster shots started in 2004. 
+
+```{r}
+ggplot(cdc)+
+  aes(year, cases)+
+  geom_line()+
+  geom_vline(xintercept = 1942, col="blue")+
+  geom_vline(xintercept = 1996, col="red")+
+  geom_vline(xintercept = 2020, col="green")+
+  geom_vline(xintercept = 2004, col="gray")
+```
+
+There were high case numbers pre 1946 (before the first  (wP) vaccine) then relatively rapid decrease in cases through through the 1970s to 2004 when our first widespread outbreak occurred again. 
+
+Mounting evidence shows that if you are primed with an aP vaccine induced immunity wanes faster than the wP vaccine. 
+
+Enter the CMI-PB project
+
+## Computational Models of Immunity Pertussis Boost. 
+
+One of the main goals of this project is to determine what is different in the immune response between wP primed individuals and aP primed individuals. 
+
+Using the booster vaccine as a proxy for infection. 
+
+All the data is available here: https://www.cmi-pb.org in JSON format. 
+
+```{r}
+library(jsonlite)
+subject <- read_json("http://cmi-pb.org/api/v5_1/subject", 
+                     simplifyVector = T)
+
+head(subject)
+```
+
+>Q3. How many subjects are there in this dataset? 
+
+```{r}
+nrow(subject)
+```
+
+>Q4. How many aP and wP subjects are there?
+
+```{r}
+table(subject$infancy_vac)
+```
+
+>Q5. Male/Female numbers?
+
+```{r}
+table(subject$biological_sex)
+```
+
+>Q6. Breakdown of biological sex and race
+
+```{r}
+table(subject$race, subject$biological_sex)
+```
+
+
+>Q7. Does this look to be representative of the US population at large?
+
+NO!
+
+```{r}
+specimen <- read_json("http://cmi-pb.org/api/v5_1/specimen", 
+                     simplifyVector = T)
+```
+
+```{r}
+ab_titer <- read_json("http://cmi-pb.org/api/v5_1/plasma_ab_titer", 
+                     simplifyVector = T)
+```
+
+```{r}
+head(specimen)
+```
+
+```{r}
+head(ab_titer)
+```
+
+To use this data we need to "join" the various tables to find all the information I need to know about a particular measurement.
+
+```{r}
+library(dplyr)
+meta <- inner_join(subject, specimen)
+head(meta)
+```
+
+Now we can join `meta` with `ab_titer`
+```{r}
+ab_data <- inner_join(meta, ab_titer)
+head(ab_data)
+```
+
+
+
+>Q8. How many different antibody isotypes are we measuring? 
+
+```{r}
+table(ab_data$isotype)
+```
+
+>Q9. How many antigens?
+
+```{r}
+table(ab_data$antigen)
+```
+
+>Q10. Lets look at antigen levels over the whole dataset
+
+```{r}
+ggplot(ab_data)+
+  aes(MFI, antigen)+
+  geom_boxplot()
+```
+
+>Q11. Break this plot down by aP or wP
+
+```{r}
+ggplot(ab_data)+
+  aes(MFI, antigen, col= infancy_vac)+
+  geom_boxplot()
+```
+
+We can also facet the plot by `infancy_vac`
+
+```{r}
+ggplot(ab_data)+
+  aes(MFI, antigen)+
+  geom_boxplot()+
+  facet_wrap(~ infancy_vac)
+```
+
+```{r}
+ggplot(ab_data)+
+  aes(MFI_normalised, antigen, col= infancy_vac)+
+  geom_boxplot()
+```
+
+Lets focus on just IgG
+
+```{r}
+igg <- ab_data|>
+  filter(isotype=="IgG")
+```
+
+```{r}
+ggplot(igg)+
+  aes(MFI_normalised, antigen, col= infancy_vac)+
+  geom_boxplot()
+```
+
+```{r}
+head(igg)
+```
+
+```{r}
+ggplot(igg)+
+  aes(MFI_normalised, antigen, col=infancy_vac)+
+  geom_boxplot()+
+  facet_wrap(~ visit)
+```
+
+Lets focus on PT (Pertussis Toxin) and IgG levels over time 
+
+```{r}
+pt_igg <- ab_data |>
+  filter(isotype=="IgG", antigen=="PT", dataset=="2021_dataset")
+```
+
+A plot of `actual_day_relative_to_boost` vs. `MFI_normalised`
+
+```{r}
+ggplot(pt_igg)+
+  aes(actual_day_relative_to_boost, MFI_normalised, col=infancy_vac, group = subject_id)+
+  geom_point()+
+  geom_line()+
+  geom_vline(xintercept = 14)+
+  geom_vline(xintercept = 0)+
+  labs(title = "IgG PT levels",
+       x="Days relative to Boost", 
+       y="MFI (normalised)")
+  
+```
+
+```{r}
+ggplot(pt_igg)+
+  aes(MFI_normalised,  col=infancy_vac)+
+  geom_boxplot()+
+  facet_wrap(~ actual_day_relative_to_boost)
+```
+
+```{r}
+subject$year_of_birth
+```
+
+```{r}
+library(lubridate)
+today() -mdy("04-23-2000")
+
+```
+
+```{r}
+time_length(today() -mdy("04-23-2000"), "years")
+```
+
+```{r}
+subject$age <- time_length(today() - ymd(subject$year_of_birth), "years")
+```
+
