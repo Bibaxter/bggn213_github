@@ -20,7 +20,7 @@ Winter 2025 class content
 
 -Class **11**: [Genome Informatics](https://github.com/Bibaxter/bggn213_github/blob/main/Class11/week-11.pdf)
 
--Class **12**: [Alphafold Analaysis](https://github.com/Bibaxter/bggn213_github/blob/main/Class12/class%2012.qmd)
+-Class **12**: [Alphafold Analaysis](https://github.com/Bibaxter/bggn213_github/blob/main/Class12/class-12.pdf)
 
 -Class **13**: [RNASeq Analysis](https://github.com/Bibaxter/bggn213_github/blob/main/Class13/class%2013%20lab%20report.qmd)
 
