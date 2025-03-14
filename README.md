@@ -24,5 +24,5 @@ Winter 2025 class content
 
 -Class **13**: [RNASeq Analysis](https://github.com/Bibaxter/bggn213_github/blob/main/Class13/class-13-lab-report.pdf)
 
--Class **14**: [RNASeq Mini Project](https://github.com/Bibaxter/bggn213_github/blob/main/Class14/Class%2014%20RNASeq%20mini%20project.qmd)
+-Class **14**: [RNASeq Mini Project](https://github.com/Bibaxter/bggn213_github/blob/main/Class14/Class-14-RNASeq-mini-project.pdf)
 
