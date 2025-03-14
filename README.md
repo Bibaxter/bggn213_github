@@ -10,7 +10,7 @@ Winter 2025 class content
 
 -Class **6**: [R Functions](https://github.com/Bibaxter/bggn213_github/blob/main/Class6/class-6-lab.pdf) 
 
--Class **7**: [Machine Learning pt. 1](https://github.com/Bibaxter/bggn213_github/blob/main/Class7/class%207%20lab.qmd)
+-Class **7**: [Machine Learning pt. 1](https://github.com/Bibaxter/bggn213_github/blob/main/Class7/class-7-lab.pdf)
 
 -Class **8**: [Breat Cancer Mini Project](https://github.com/Bibaxter/bggn213_github/blob/main/Class8/Class%208%20Breast%20cancer%20mini%20project.qmd)
 
