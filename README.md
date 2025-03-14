@@ -14,7 +14,7 @@ Winter 2025 class content
 
 -Class **8**: [Breat Cancer Mini Project](https://github.com/Bibaxter/bggn213_github/blob/main/Class8/Class-8-Breast-cancer-mini-project.pdf)
 
--Class **9**: [Halloween Mini Project](https://github.com/Bibaxter/bggn213_github/blob/main/Class9/class%209.qmd)
+-Class **9**: [Halloween Mini Project](https://github.com/Bibaxter/bggn213_github/blob/main/Class9/class-9.pdf)
 
 -Class **10**: [Structural Bioinformatics Pt. 1](https://github.com/Bibaxter/bggn213_github/blob/main/Class10/class%2010.qmd)
 
